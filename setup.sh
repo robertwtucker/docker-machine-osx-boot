@@ -2,6 +2,7 @@
 # This script installs the components necessary to start the default Docker
 # host machine when OSX boots. It also modifies ~/.bash_profile so that
 # the Docker environment variables automatically get created.
+set -o errexit
 
 DOCKER_MACHINE=$(which docker-machine)
 if [ ! -f $DOCKER_MACHINE ]; then
@@ -9,7 +10,7 @@ if [ ! -f $DOCKER_MACHINE ]; then
   exit 1
 fi
 
-curl -sL http://git-url/robertwtucker/docker-machine-osx-boot/plist.template | \
+curl -fs https://raw.githubusercontent.com/robertwtucker/docker-machine-osx-boot/master/plist.template | \
   sed -e "s?{{user-path}}?$(echo $PATH)?" -e "s?{{docker-machine}}?$($DOCKER_MACHINE)?" \
   > ~/Library/LaunchAgents/com.docker.machine.default.plist
 
