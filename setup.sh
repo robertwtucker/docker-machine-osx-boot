@@ -11,7 +11,7 @@ if [ ! -f $DOCKER_MACHINE ]; then
 fi
 
 curl -fs https://raw.githubusercontent.com/robertwtucker/docker-machine-osx-boot/master/plist.template | \
-  sed -e "s?{{user-path}}?$(echo $PATH)?" -e "s?{{docker-machine}}?$($DOCKER_MACHINE)?" \
+  sed -e "s/{{user-path}}/$(echo $PATH)/" -e "s/{{docker-machine}}/$($DOCKER_MACHINE)/" \
   > ~/Library/LaunchAgents/com.docker.machine.default.plist
 
 launchctl load ~/Library/LaunchAgents/com.docker.machine.default.plist
